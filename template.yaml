@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  port:
+    Type: Number
+    Description: コンテナのポート番号
+
+Resources:
+  NginxTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: nginx-example
+      ContainerDefinitions:
+        - Name: nginx
+          Image: nginx:latest
+          Essential: true
+          Memory: 1024
+          PortMappings:
+            - ContainerPort: !Ref port
+              HostPort: !Ref port
+              Protocol: tcp
