@@ -2,9 +2,12 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 12
+  pre_build:
     commands:
-      - yum install -y mariadb-server
+      - node -v
+      - npm ci
   build:
     commands:
-      - env | sort
-      - mysql -u${RDS_USER} -p${RDS_PASSWD} -h${RDS_ENDPOINT} -e "show databases;"
+      - npm test
