@@ -1,7 +1,14 @@
-version: 0.2
+env:
+  parameter-store:
+    ssm_parameter: "[パラメーターの名前]"
+  secrets-manager:
+    secret_parameter: "[シークレットの名前]:[シークレットのキー]"
 
 phases:
-  install:
+  pre_build:
     commands:
+      - PARAM1=${ssm_parameter}
+      - PARAM2=${secret_parameter}
+      #以下省略.どちらの値もログ出力では***になる.
       - aws --version
       - aws s3 sync s3://imamura-test-before/ s3://imamura-test-after/2024/01/30/
