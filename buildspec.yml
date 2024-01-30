@@ -4,3 +4,4 @@ phases:
   install:
     commands:
       - aws --version
+      - aws s3 sync s3://imamura-test-before/ s3://imamura-test-after/2024/01/30/
