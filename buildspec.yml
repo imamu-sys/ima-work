@@ -3,4 +3,4 @@ version: 0.2
 phases:
   install:
     commands:
-      - sudo yum install -y mariadb-server
+      - aws --version
