@@ -1,0 +1,10 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - yum install -y mariadb-server
+  build:
+    commands:
+      - env | sort
+      - mysql -u${RDS_USER} -p${RDS_PASSWD} -h${RDS_ENDPOINT} -e "show databases;"
