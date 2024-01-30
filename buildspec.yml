@@ -1,8 +1,7 @@
 env:
-  parameter-store:
-    ssm_parameter: "[パラメーターの名前]"
   secrets-manager:
-    secret_parameter: "[シークレットの名前]:[シークレットのキー]"
+    secret_parameter: "IAMUser1-credentials:accessKeyId"
+    secret_parameter: "IAMUser1-credentials:secretAccessKey"
 
 phases:
   pre_build:
