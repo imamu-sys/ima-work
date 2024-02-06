@@ -1,5 +1,12 @@
 version: 0.2
- phases:
-   install:
-     commands:
-       - aws --version
+
+phases:
+  install:
+    commands:
+      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      - unzip awscliv2.zip
+      - ls -l /root/.pyenv/shims/aws
+      - ./aws/install --bin-dir /root/.pyenv/shims --install-dir /usr/local/aws-cli --update
+  build:
+    commands:
+      - aws --version
