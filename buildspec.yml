@@ -1,26 +1,18 @@
-env:
-  secrets-manager:
-    accessKeyId: "IAMUser1-credentials:accessKeyId"
-    .SecretAccessKey: "IAMUser1-credentials:secretAccessKey"
-
-phases:
-  install:
-    commands:
-      - apk --update add curl
-      - apk --update add py-pip
-      - apk --update add jq
-      - pip install awscli
-  pre_build:
-    commands:
-      - curl -qL -o aws_credentials.json 169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI > aws_credentials.json
-      - aws configure set region $AWS_REGION
-      - aws configure set aws_access_key_id `jq -r '.AccessKeyId' aws_credentials.json`
-      - aws configure set aws_secret_access_key `jq -r '.SecretAccessKey' aws_credentials.json`
-      - aws configure set aws_session_token `jq -r '.Token' aws_credentials.json`
-  build:
-      commands:
-      - echo "hello"
-  post_build:
-    commands:
-      - echo "hollo"
-      - aws s3 sync s3://imamura-test-before/ s3://imamura-test-after/2024/01/30/
+version: 0.2
+ phases:
+   install:
+     commands:
+       - echo install aws cli v2
+       - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+       - unzip awscliv2.zip
+       - ./aws/install --bin-dir /root/.pyenv/shims --install-dir /usr/local/aws-cli --update
+   pre_build:
+     commands:
+       - export TZ="Asia/Tokyo"
+   build:
+     commands:
+       - echo create ami
+       - sh ./get_ami.sh
+ post_build:
+     commands:
+       - echo Build completed on date
